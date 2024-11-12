@@ -1,6 +1,6 @@
-package com.glaiss.core.repository;
+package com.glaiss.core.domain.repository;
 
-import com.glaiss.core.model.EntityAbstract;
+import com.glaiss.core.domain.model.EntityAbstract;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;

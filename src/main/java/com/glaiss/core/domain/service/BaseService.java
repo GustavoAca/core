@@ -1,6 +1,6 @@
-package com.glaiss.core.service;
+package com.glaiss.core.domain.service;
 
-import com.glaiss.core.model.EntityAbstract;
+import com.glaiss.core.domain.model.EntityAbstract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

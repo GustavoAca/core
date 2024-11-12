@@ -1,4 +1,4 @@
-package com.glaiss.core.model;
+package com.glaiss.core.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

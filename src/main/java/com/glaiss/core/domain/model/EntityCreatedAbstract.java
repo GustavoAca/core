@@ -1,4 +1,4 @@
-package com.glaiss.core.model;
+package com.glaiss.core.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class EntityCreatedAbstract {
+public abstract class EntityCreatedAbstract implements BaseEntity {
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
