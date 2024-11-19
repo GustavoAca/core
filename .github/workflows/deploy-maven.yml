@@ -43,7 +43,6 @@ jobs:
         uses: s4u/setup-maven-action@v1.16.0
 
       - name: Authenticate to GitHub Packages
-        run: - name: Set up Maven settings
         run: |
           mkdir -p ~/.m2
           echo '<?xml version="1.0" encoding="UTF-8"?>' > ~/.m2/settings.xml
@@ -77,6 +76,7 @@ jobs:
           echo '    </server>' >> ~/.m2/settings.xml
           echo '  </servers>' >> ~/.m2/settings.xml
           echo '</settings>' >> ~/.m2/settings.xml
+
 
       - name: Deploy to GitHub Packages
         run: mvn deploy -DskipTests
