@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.glaiss</groupId>
 	<artifactId>core</artifactId>
-	<version>0.1.0</version>
+	<version>0.0.1</version>
 	<name>core</name>
 	<description>Projeto de centralização de configurações</description>
 	<url />
