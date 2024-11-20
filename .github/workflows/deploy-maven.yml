@@ -39,6 +39,11 @@ jobs:
       - name: Run tests
         run: mvn test
 
+      - name: extrair versão do pom
+        id: extract_version
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+
       - name: Set up Maven
         uses: s4u/setup-maven-action@v1.16.0
 
@@ -101,19 +106,12 @@ jobs:
       - name: Increment version in pom.xml
         id: increment_version
         run: |
-          current_version=$(xmllint --xpath "//*[local-name()='version']/text()" pom.xml | head -n 1)
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          major=${version_parts[0]}
-          minor=${version_parts[1]}
-          patch=${version_parts[2]}
-          new_minor=$((minor + 1))
-          new_version="$major.$new_minor.$patch"
-          echo "new_version=$new_version" >> $GITHUB_ENV
-          mvn versions:set -DnewVersion=$new_version
+          chmod +x ./increment_version.sh
+          ./increment_version.sh
 
       - name: Commit and push version increment
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
