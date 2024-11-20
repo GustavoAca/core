@@ -43,7 +43,6 @@ jobs:
         id: extract_version
         run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-
       - name: Set up Maven
         uses: s4u/setup-maven-action@v1.16.0
 
