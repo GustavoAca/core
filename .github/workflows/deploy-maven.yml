@@ -49,7 +49,7 @@ jobs:
       - name: Authenticate to GitHub Packages
         run: |
           mkdir -p ~/.m2
-          echo "${{ secrets.MAVEN_SETTINGS }}" > ~/.m2/settings.xml
+          cp setting.xml ~/.m2/setting.xml
 
       - name: Deploy to GitHub Packages
         run: mvn deploy -DskipTests
