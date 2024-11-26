@@ -1,19 +1,25 @@
 package com.glaiss.core.security;
 
 
-import java.util.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Privilegio {
-    ROLE_FREE,
-    ROLE_BASIC,
+    ROLE_ADMIN,
     ROLE_PREMIUM,
-    ROLE_ADMIN;
+    ROLE_BASIC,
+    ROLE_FREE;
 
     Privilegio(){}
 
-    public static List<String> getPrivilegios(){
+    public static List<SimpleGrantedAuthority> getHierarquia(String privilegioUsuario) {
         return Arrays.stream(values())
                 .map(Enum::name)
-                .toList();
+                .dropWhile(privilegio -> !privilegio.equals(privilegioUsuario))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }
