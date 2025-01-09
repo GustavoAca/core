@@ -1,7 +1,7 @@
 package com.glaiss.core.domain.service;
 
 import com.glaiss.core.domain.model.EntityAbstract;
-import org.springframework.data.domain.Page;
+import com.glaiss.core.domain.model.ResponsePage;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,8 +21,8 @@ public class BaseServiceImpl<E extends EntityAbstract, K extends Serializable, R
     }
 
     @Override
-    public Page<E> listarPagina(Pageable pageable) {
-        return repo.findAll(pageable);
+    public ResponsePage<E> listarPagina(Pageable pageable) {
+        return new ResponsePage<>(repo.findAll(pageable));
     }
 
     @Override
