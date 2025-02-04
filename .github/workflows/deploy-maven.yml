@@ -75,7 +75,7 @@ jobs:
           echo '    <server>' >> ~/.m2/settings.xml
           echo '      <id>github</id>' >> ~/.m2/settings.xml
           echo '      <username>${{ secrets.USERNAME }}</username>' >> ~/.m2/settings.xml
-          echo '      <password>${{ secrets.GH_TOKEN }}</password>' >> ~/.m2/settings.xml
+          echo '      <password>${{ secrets.GITHUB_TOKEN }}</password>' >> ~/.m2/settings.xml
           echo '    </server>' >> ~/.m2/settings.xml
           echo '  </servers>' >> ~/.m2/settings.xml
           echo '</settings>' >> ~/.m2/settings.xml
