@@ -75,7 +75,7 @@ jobs:
           echo '    <server>' >> ~/.m2/settings.xml
           echo '      <id>github</id>' >> ~/.m2/settings.xml
           echo '      <username>${{ secrets.USERNAME }}</username>' >> ~/.m2/settings.xml
-          echo '      <password>${{ secrets.GH_TOKEN }}</password>' >> ~/.m2/settings.xml
+          echo '      <password>${{ secrets.GITHUB_TOKEN }}</password>' >> ~/.m2/settings.xml
           echo '    </server>' >> ~/.m2/settings.xml
           echo '  </servers>' >> ~/.m2/settings.xml
           echo '</settings>' >> ~/.m2/settings.xml
@@ -108,7 +108,7 @@ jobs:
 
       - name: Commit and push version increment
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
