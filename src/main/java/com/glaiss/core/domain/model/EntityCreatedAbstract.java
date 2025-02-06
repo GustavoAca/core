@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(value = {AuditingEntityListener.class})
 public abstract class EntityCreatedAbstract implements BaseEntity {
 
     @Column(name = "created_date", nullable = false, updatable = false)
