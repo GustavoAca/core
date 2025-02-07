@@ -19,13 +19,9 @@ public class SecurityContextUtils {
     }
 
     private static String extractUsername(String input) {
-        Pattern pattern = Pattern.compile("username=([^,\\]]+)");
+        Pattern pattern = Pattern.compile("username:\\s*([^,\\s]+)");
         Matcher matcher = pattern.matcher(input);
-
-        if (matcher.find()) {
-            return matcher.group(1).trim();
-        }
-        return null;
+        return matcher.find() ? matcher.group(1).trim() : null;
     }
 
     public static UUID getId() {
@@ -34,12 +30,8 @@ public class SecurityContextUtils {
     }
 
     private static UUID extractId(String input) {
-        Pattern pattern = Pattern.compile("userId=([^,\\]]+)");
+        Pattern pattern = Pattern.compile("userId:\\s*([a-fA-F0-9-]+)");
         Matcher matcher = pattern.matcher(input);
-
-        if (matcher.find()) {
-            return UUID.fromString(matcher.group(1).trim());
-        }
-        return null;
+        return matcher.find() ? UUID.fromString(matcher.group(1).trim()) : null;
     }
 }

@@ -60,14 +60,7 @@ public class RedisConfiguration {
     @Bean
     public RedisSerializer<Object> redisSerializer(ObjectMapper objectMapper) {
         ObjectMapper redisObjectMapper = objectMapper.copy();
-        // Remove a linha de mapeamento incorreta
-        // module.addAbstractTypeMapping(PageImpl.class, PageImpl.class);
-
         SimpleModule module = new SimpleModule();
-        // Se for necessário registrar algum tipo abstrato, faça isso aqui corretamente
-        // Exemplo de mapeamento correto:
-        // module.addAbstractTypeMapping(MyAbstractClass.class, MyConcreteClass.class);
-
         redisObjectMapper.registerModule(module);
         return new GenericJackson2JsonRedisSerializer(redisObjectMapper);
     }

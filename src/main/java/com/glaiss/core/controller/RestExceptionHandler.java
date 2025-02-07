@@ -47,5 +47,21 @@ public class RestExceptionHandler {
         pb.setDetail(e.getMessage());
         return pb;
     }
+
+    @ExceptionHandler(ClassCastException.class)
+    public ProblemDetail castCannotParse(ClassCastException e) {
+        var pb = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        pb.setTitle("Erro ao trasformar objeto");
+        pb.setDetail(e.getMessage());
+        return pb;
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public ProblemDetail sqlException(Throwable e) {
+        var pb = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        pb.setTitle("Erro");
+        pb.setDetail(e.getMessage());
+        return pb;
+    }
 }
 
