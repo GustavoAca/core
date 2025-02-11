@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @EnableDiscoveryClient
 @Configuration
 public class CorsConfigurationAbstract implements WebMvcConfigurer {
@@ -20,13 +23,15 @@ public class CorsConfigurationAbstract implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(getGatewayUrl())
+                .allowedOrigins(getAllowedOrigins())
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
     }
 
-    private String[] getGatewayUrl() {
-        return discoveryClient.getInstances(Servicos.GATEWAY.name()).stream()
+    private String[] getAllowedOrigins() {
+        List<String> origins = discoveryClient.getInstances(Servicos.GATEWAY.name()).stream()
                 .map(g -> String.format("%s:%s", g.getHost(), g.getPort()))
-                .toArray(String[]::new);
+                .collect(Collectors.toList());
+        origins.add("http://localhost:8761");
+        return origins.toArray(new String[0]);
     }
 }
