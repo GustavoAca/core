@@ -15,8 +15,12 @@ public class AuditoriaAwareImpl implements AuditorAware<String> {
     private String apiName;
 
     public Optional<String> getCurrentAuditor() {
-        return Objects.nonNull(SecurityContextUtils.getUsername()) ?
-                Optional.of(SecurityContextUtils.getUsername()) :
-                Optional.of(apiName);
+        try {
+            return Objects.nonNull(SecurityContextUtils.getUsername()) ?
+                    Optional.of(SecurityContextUtils.getUsername()) :
+                    Optional.of(apiName);
+        } catch (Throwable e) {
+            return Optional.of(apiName);
+        }
     }
 }
