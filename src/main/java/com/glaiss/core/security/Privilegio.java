@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public enum Privilegio {
     ROLE_ADMIN,
+    ROLE_MICROSERVICO,
     ROLE_PREMIUM,
     ROLE_BASIC,
     ROLE_FREE;
