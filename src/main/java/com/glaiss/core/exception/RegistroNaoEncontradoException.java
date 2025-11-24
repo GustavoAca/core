@@ -27,7 +27,7 @@ public class RegistroNaoEncontradoException extends GlaissException {
         if (Objects.isNull(id)) {
             pb.setDetail(registro);
         } else {
-            pb.setDetail(String.format("%s não encontrado com o id: %d.", registro, id));
+            pb.setDetail(String.format("%s não encontrado com o identificador: %d.", registro, id));
         }
         return pb;
     }

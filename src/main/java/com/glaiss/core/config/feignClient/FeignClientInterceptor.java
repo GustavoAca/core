@@ -1,12 +1,14 @@
 package com.glaiss.core.config.feignClient;
 
 import feign.RequestInterceptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @Configuration
+@ConditionalOnProperty(name = "spring.feign.client.enabled", havingValue = "true")
 public class FeignClientInterceptor {
     @Bean
     public RequestInterceptor requestInterceptor() {

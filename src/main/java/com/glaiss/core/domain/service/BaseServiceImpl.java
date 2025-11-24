@@ -33,6 +33,6 @@ public class BaseServiceImpl<E extends EntityAbstract, K extends Serializable, R
     @Override
     public Boolean deletar(K id) {
         repo.deleteById(id);
-        return repo.existsById(id);
+        return !repo.existsById(id);
     }
 }
