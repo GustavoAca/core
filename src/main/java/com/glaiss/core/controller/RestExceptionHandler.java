@@ -4,9 +4,14 @@ import com.glaiss.core.exception.GlaissException;
 import org.hibernate.PersistentObjectException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Map;
 
 public class RestExceptionHandler {
 
@@ -62,6 +67,18 @@ public class RestExceptionHandler {
         pb.setTitle("Erro");
         pb.setDetail(e.getMessage());
         return pb;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleAll(Exception ex) {
+        StringWriter sw = new StringWriter();
+        ex.printStackTrace(new PrintWriter(sw));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of(
+                        "error", "internal_server_error",
+                        "message", ex.getMessage(),
+                        "trace", sw.toString()
+                ));
     }
 }
 
