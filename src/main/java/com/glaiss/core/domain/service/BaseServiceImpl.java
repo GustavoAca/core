@@ -2,13 +2,13 @@ package com.glaiss.core.domain.service;
 
 import com.glaiss.core.domain.model.EntityAbstract;
 import com.glaiss.core.domain.model.ResponsePage;
+import com.glaiss.core.domain.repository.BaseRepository;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
 import java.util.Optional;
 
-public class BaseServiceImpl<E extends EntityAbstract, K extends Serializable, R extends JpaRepository<E, K>> implements BaseService<E, K> {
+public class BaseServiceImpl<E extends EntityAbstract, K extends Serializable, R extends BaseRepository<E, K>> implements BaseService<E, K> {
 
     protected R repo;
 
