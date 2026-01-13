@@ -1,9 +1,6 @@
 package com.glaiss.core.domain.model;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +24,9 @@ public abstract class EntityAbstract extends EntityCreatedAbstract {
     @Column(name = "modified_by")
     @LastModifiedBy
     private String modifiedBy;
+
+    @Version
+    private Long version;
 
     @Access(AccessType.PROPERTY)
     public void setModifiedDate(LocalDateTime modifiedDate) {

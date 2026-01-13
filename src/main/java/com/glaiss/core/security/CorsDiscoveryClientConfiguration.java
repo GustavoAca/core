@@ -23,9 +23,9 @@ public class CorsDiscoveryClientConfiguration implements CorsConfiguration {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins(getAllowedOrigins())
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+//        registry.addMapping("/**")
+//                .allowedOrigins(getAllowedOrigins())
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
     }
 
     private String[] getAllowedOrigins() {
