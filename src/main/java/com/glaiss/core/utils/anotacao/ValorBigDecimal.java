@@ -21,4 +21,6 @@ public @interface ValorBigDecimal {
     Class<? extends Payload>[] payload() default {};
 
     String pattern() default "0.00";
+
+    boolean nullable() default false;
 }

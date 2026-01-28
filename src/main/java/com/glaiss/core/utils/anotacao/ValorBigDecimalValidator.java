@@ -7,16 +7,18 @@ import java.math.BigDecimal;
 
 public class ValorBigDecimalValidator implements ConstraintValidator<ValorBigDecimal, BigDecimal> {
 
-    private String pattern;
+    private boolean nullable;
 
     @Override
     public void initialize(ValorBigDecimal constraintAnnotation) {
-        this.pattern = constraintAnnotation.pattern();
+        this.nullable = constraintAnnotation.nullable();
     }
 
     @Override
     public boolean isValid(BigDecimal value, ConstraintValidatorContext context) {
-        if (value == null) return false;
+        if (value == null) {
+            return nullable;
+        }
         return value.scale() <= 2;
     }
 }
