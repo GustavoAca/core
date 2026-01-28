@@ -1,0 +1,106 @@
+name: Reusable Service Deploy
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+        description: "Nome da imagem Docker (ex: lista, users)"
+      java_version:
+        required: false
+        type: string
+        default: '17'
+        description: "Versão do Java"
+      needs_private_key:
+        required: false
+        type: boolean
+        default: false
+        description: "Se true, gera o arquivo private.key (usado no users)"
+    secrets:
+      USERNAME:
+        required: true
+      GH_TOKEN:
+        required: true
+      DOCKER_HUB_USER:
+        required: true
+      DOCKER_HUB_PASSWORD:
+        required: true
+      JWT_PRIVATE_KEY:
+        required: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: ${{ inputs.java_version }}
+
+      - name: Configurar Maven
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings><servers><server><id>github</id><username>${{ secrets.USERNAME }}</username><password>${{ secrets.GH_TOKEN }}</password></server></servers></settings>" > ~/.m2/settings.xml
+
+      # Passo condicional para o projeto USERS
+      - name: Configurar chave privada (Condicional)
+        if: ${{ inputs.needs_private_key }}
+        run: echo "${{ secrets.JWT_PRIVATE_KEY }}" > src/main/resources/private.key
+
+      - name: Verificar dependências e package
+        run: mvn clean install -DskipTests
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+
+      - name: Extrair versão do pom
+        id: extract_version
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Build imagem docker
+        run: |
+          docker build . --file Dockerfile --tag ${{ inputs.image_name }}:${{ env.PROJECT_VERSION }}
+
+      - name: Deploy image
+        run: |
+          docker tag ${{ inputs.image_name }}:${{ env.PROJECT_VERSION }} gacacio/${{ inputs.image_name }}:${{ env.PROJECT_VERSION }}
+          docker push gacacio/${{ inputs.image_name }}:${{ env.PROJECT_VERSION }}
+
+  incrementar-versao:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java_version }}
+          distribution: 'adopt'
+
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+
+      - name: Increment version in pom.xml
+        id: increment_version
+        run: |
+          chmod +x ./increment_version.sh
+          ./increment_version.sh
+
+      - name: Commit and push version increment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add pom.xml
+          git commit -m "Subindo versão para ${{ env.new_version }}"
+          git push origin main
