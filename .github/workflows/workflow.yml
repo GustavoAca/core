@@ -6,20 +6,8 @@ on:
       - 'G*'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '17'
-      
-      - name: Build project
-        run: mvn -B clean compile
-
-      - name: Verificar dependências
-        run: mvn dependency:resolve
+  call-reusable-workflow:
+    uses: GustavoAca/infra-aws-free-tier/.github/workflows/service-workflow.yml@main
+    secrets:
+      USERNAME: ${{ secrets.USERNAME }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
