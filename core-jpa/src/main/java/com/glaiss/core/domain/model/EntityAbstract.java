@@ -30,6 +30,9 @@ public abstract class EntityAbstract extends EntityCreatedAbstract {
         this.modifiedBy = modifiedBy;
     }
 
+    protected EntityAbstract() {
+    }
+
     public EntityAbstract(LocalDateTime modifiedDate, String modifiedBy, Long version) {
         this.modifiedDate = modifiedDate;
         this.modifiedBy = modifiedBy;

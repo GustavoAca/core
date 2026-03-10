@@ -20,7 +20,7 @@
     <modules>
         <module>core-common</module>
         <module>core-jpa</module>
-        <module>core-redis</module>
+        <module>core-cache</module>
         <module>core-security</module>
         <module>core-cloud</module>
     </modules>
