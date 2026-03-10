@@ -2,3 +2,4 @@ com.glaiss.core.config.jpa.JpaConfig
 com.glaiss.core.config.jpa.AuditoriaAwareConfig
 com.glaiss.core.config.jpa.JacksonConfig
 com.glaiss.core.config.jpa.ValorBigDecimalJacksonConfig
+com.glaiss.core.controller.JpaRestExceptionHandler

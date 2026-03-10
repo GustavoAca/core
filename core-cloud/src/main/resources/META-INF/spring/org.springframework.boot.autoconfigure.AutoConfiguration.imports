@@ -1,0 +1,2 @@
+com.glaiss.core.config.eureka.RestTemplateConfig
+com.glaiss.core.config.eureka.CorsDiscoveryClientConfiguration

@@ -1,5 +1,6 @@
 package com.glaiss.core.config.jpa;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -7,14 +8,9 @@ import org.springframework.data.domain.AuditorAware;
 @Configuration
 public class AuditoriaAwareConfig {
 
-    private final AuditorAware<String> auditorAware;
-
-    public AuditoriaAwareConfig(AuditorAware<String> auditorAware) {
-        this.auditorAware = auditorAware;
-    }
-
     @Bean
+    @ConditionalOnMissingBean(AuditorAware.class)
     public AuditorAware<String> auditorProvider() {
-        return auditorAware;
+        return new DefaultAuditorAware();
     }
 }

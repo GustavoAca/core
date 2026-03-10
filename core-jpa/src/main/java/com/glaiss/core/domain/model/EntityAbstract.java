@@ -1,19 +1,11 @@
 package com.glaiss.core.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Getter
-@SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
 @MappedSuperclass
 public abstract class EntityAbstract extends EntityCreatedAbstract {
 
@@ -36,5 +28,18 @@ public abstract class EntityAbstract extends EntityCreatedAbstract {
     @Access(AccessType.PROPERTY)
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    public EntityAbstract(LocalDateTime modifiedDate, String modifiedBy, Long version) {
+        this.modifiedDate = modifiedDate;
+        this.modifiedBy = modifiedBy;
+        this.version = version;
+    }
+
+    public EntityAbstract(LocalDateTime createdDate, String createdBy, LocalDateTime modifiedDate, String modifiedBy, Long version) {
+        super(createdDate, createdBy);
+        this.modifiedDate = modifiedDate;
+        this.modifiedBy = modifiedBy;
+        this.version = version;
     }
 }
