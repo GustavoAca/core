@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @AutoConfiguration
-@ConditionalOnProperty(name = "spring.security.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
 public class JwtAuthentication {
 
     @Bean

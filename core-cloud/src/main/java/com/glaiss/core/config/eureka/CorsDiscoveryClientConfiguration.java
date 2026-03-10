@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @EnableDiscoveryClient
 @Configuration
-@ConditionalOnProperty(name = "spring.discovery.client.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "spring.discovery.client.enabled", havingValue = "true", matchIfMissing = true)
 public class CorsDiscoveryClientConfiguration implements CorsConfig {
 
     private final DiscoveryClient discoveryClient;

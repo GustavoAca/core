@@ -17,7 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 @AutoConfiguration
-@ConditionalOnProperty(name = "spring.redis.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "spring.redis.enabled", havingValue = "true", matchIfMissing = true)
 public class RedisConfiguration {
 
     private final ObjectMapper objectMapper;

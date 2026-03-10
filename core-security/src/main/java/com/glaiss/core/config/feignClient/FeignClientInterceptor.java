@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @Configuration
-@ConditionalOnProperty(name = "spring.feign.client.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "spring.feign.client.enabled", havingValue = "true", matchIfMissing = true)
 public class FeignClientInterceptor {
     @Bean
     public RequestInterceptor requestInterceptor() {

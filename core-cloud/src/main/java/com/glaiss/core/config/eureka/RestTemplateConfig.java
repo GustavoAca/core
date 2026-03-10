@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@ConditionalOnProperty(name = "spring.eureka.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "spring.eureka.enabled", havingValue = "true", matchIfMissing = true)
 public class RestTemplateConfig {
 
     @Bean
