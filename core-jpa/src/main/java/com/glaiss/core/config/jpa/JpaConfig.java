@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
-@EnableJpaRepositories(basePackages = "com.gustavoacacio.listadecompra.domain.repository.jpa")
+@EnableJpaRepositories
 @ConditionalOnProperty(name = "spring.jpa.enabled", havingValue = "true")
 public class JpaConfig {
 }
