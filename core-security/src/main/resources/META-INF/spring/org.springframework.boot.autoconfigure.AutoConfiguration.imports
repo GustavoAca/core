@@ -1,0 +1,4 @@
+com.glaiss.core.security.SecurityCorsConfiguration
+com.glaiss.core.security.JwtAuthentication
+com.glaiss.core.config.jpa.AuditoriaAwareImpl
+com.glaiss.core.config.feignClient.FeignClientInterceptor

@@ -1,0 +1,3 @@
+com.glaiss.core.controller.RestExceptionHandler
+com.glaiss.core.providers.ApplicationContextProvider
+com.glaiss.core.actuator.PomInfoContributor
