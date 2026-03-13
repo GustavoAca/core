@@ -1,6 +1,7 @@
 package com.glaiss.core.controller;
 
 import com.glaiss.core.exception.GlaissException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+@Slf4j
 public class RestExceptionHandler {
 
     @ExceptionHandler(GlaissException.class)
@@ -41,17 +43,19 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(ClassCastException.class)
     public ProblemDetail handleClassCastException(ClassCastException e) {
+        log.error("Erro de conversão de tipos: ", e);
         var pb = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         pb.setTitle("Erro de conversão de tipos");
-        pb.setDetail(e.getMessage());
+        pb.setDetail("Ocorreu um erro ao processar os dados.");
         return pb;
     }
 
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGeneralException(Exception e) {
+        log.error("Erro Interno não tratado: ", e);
         var pb = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         pb.setTitle("Erro Interno do Servidor");
-        pb.setDetail(e.getMessage());
+        pb.setDetail("Ocorreu um erro inesperado. Por favor, tente novamente mais tarde ou entre em contato com o suporte.");
         return pb;
     }
 }
