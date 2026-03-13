@@ -7,7 +7,7 @@ public class PermissaoFuncionalidadeException extends GlaissException {
 
     @Override
     public ProblemDetail toProblemDetail() {
-        var pb = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
+        var pb = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
         pb.setTitle("Usuário sem privilegios necessários");
         pb.setDetail("Usuário não contem as permissões necessárias para acessar a funcionalidade");
         return pb;

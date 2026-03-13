@@ -20,6 +20,18 @@ public abstract class EntityAbstract extends EntityCreatedAbstract {
     @Version
     private Long version;
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public LocalDateTime getModifiedDate(){
+        return this.modifiedDate;
+    }
+
     @Access(AccessType.PROPERTY)
     public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;

@@ -49,4 +49,26 @@ class FeignClientInterceptorTest {
             }
         }
     }
+
+    @Nested
+    class Dado_um_usuario_nao_autenticado {
+
+        @Test
+        void entao_nao_deve_adicionar_header_authorization() {
+            try (MockedStatic<SecurityContextHolder> mockedContext = Mockito.mockStatic(SecurityContextHolder.class)) {
+                // Dado
+                SecurityContext securityContext = mock(SecurityContext.class);
+                when(securityContext.getAuthentication()).thenReturn(null);
+                mockedContext.when(SecurityContextHolder::getContext).thenReturn(securityContext);
+
+                RequestTemplate template = new RequestTemplate();
+
+                // Quando
+                interceptor.requestInterceptor().apply(template);
+
+                // Então
+                assertThat(template.headers().get("Authorization")).isNull();
+            }
+        }
+    }
 }

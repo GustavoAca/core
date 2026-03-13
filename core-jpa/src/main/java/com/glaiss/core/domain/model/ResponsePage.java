@@ -11,6 +11,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"pageable"})
 public class ResponsePage<T> extends PageImpl<T> {
+
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public ResponsePage(@JsonProperty("content") List<T> content,
                         @JsonProperty("number") int page,

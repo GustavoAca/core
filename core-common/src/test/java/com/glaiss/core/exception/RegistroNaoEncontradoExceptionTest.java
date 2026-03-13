@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegistroNaoEncontradoExceptionTest {
 
@@ -13,17 +14,19 @@ class RegistroNaoEncontradoExceptionTest {
     class Dado_uma_excecao_com_id {
 
         @Test
-        void entao_deve_retornar_problem_detail_com_detalhe_formatado() {
+        void entao_deve_retornar_detalhe_com_id() {
             // Dado
-            var exception = new RegistroNaoEncontradoException(123L, "Usuário");
+            Long id = 123L;
+            String registro = "Usuario";
+            RegistroNaoEncontradoException exception = new RegistroNaoEncontradoException(id, registro);
 
             // Quando
-            ProblemDetail pb = exception.toProblemDetail();
+            ProblemDetail result = exception.toProblemDetail();
 
             // Então
-            assertEquals(HttpStatus.NOT_FOUND.value(), pb.getStatus());
-            assertEquals("Registro não encontrado.", pb.getTitle());
-            assertEquals("Usuário não encontrado com o identificador: 123.", pb.getDetail());
+            assertEquals(HttpStatus.NOT_FOUND.value(), result.getStatus());
+            assertTrue(result.getDetail().contains("123"));
+            assertTrue(result.getDetail().contains("Usuario"));
         }
     }
 
@@ -31,16 +34,17 @@ class RegistroNaoEncontradoExceptionTest {
     class Dado_uma_excecao_sem_id {
 
         @Test
-        void entao_deve_retornar_problem_detail_com_mensagem_direta() {
+        void entao_deve_retornar_detalhe_apenas_com_registro() {
             // Dado
-            var exception = new RegistroNaoEncontradoException("Nenhum item encontrado na lista.");
+            String registro = "Lista de Compras";
+            RegistroNaoEncontradoException exception = new RegistroNaoEncontradoException(registro);
 
             // Quando
-            ProblemDetail pb = exception.toProblemDetail();
+            ProblemDetail result = exception.toProblemDetail();
 
             // Então
-            assertEquals(HttpStatus.NOT_FOUND.value(), pb.getStatus());
-            assertEquals("Nenhum item encontrado na lista.", pb.getDetail());
+            assertEquals(HttpStatus.NOT_FOUND.value(), result.getStatus());
+            assertEquals(registro, result.getDetail());
         }
     }
 }

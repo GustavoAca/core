@@ -1,12 +1,17 @@
 package com.glaiss.core.domain.service;
 
 import com.glaiss.core.domain.model.EntityAbstract;
+import com.glaiss.core.domain.model.ResponsePage;
 import com.glaiss.core.domain.repository.BaseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,6 +53,27 @@ class BaseServiceImplTest {
             // Então
             assertNotNull(result);
             verify(repository, times(1)).save(entity);
+        }
+    }
+
+    @Nested
+    class Dado_uma_solicitacao_de_paginacao {
+
+        @Test
+        void entao_deve_retornar_pagina_de_entidades() {
+            // Dado
+            Pageable pageable = Pageable.unpaged();
+            TestEntity entity = new TestEntity();
+            Page<TestEntity> page = new PageImpl<>(List.of(entity));
+            when(repository.findAll(pageable)).thenReturn(page);
+
+            // Quando
+            ResponsePage<TestEntity> result = service.listarPagina(pageable);
+
+            // Então
+            assertNotNull(result);
+            assertEquals(1, result.getTotalElements());
+            verify(repository, times(1)).findAll(pageable);
         }
     }
 
